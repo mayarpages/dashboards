@@ -456,7 +456,10 @@
   <div class="table-card">
     <div class="table-card-header">
       <h3>📋 Employee Record</h3>
-      <span class="table-count" id="tableCount">0 employees</span>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="table-count" id="tableCount">0 employees</span>
+        <button onclick="downloadFile('csv')" style="background:rgba(80,185,72,0.25);border:1px solid rgba(80,185,72,0.5);color:#fff;border-radius:7px;padding:4px 13px;font-size:0.7rem;font-weight:600;font-family:Poppins,sans-serif;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='rgba(80,185,72,0.4)'" onmouseout="this.style.background='rgba(80,185,72,0.25)'">⬇ Download Data</button>
+      </div>
     </div>
     <div class="table-search-bar">
       <input type="text" id="tableSearch" placeholder="🔍  Search by name, ID or supervisor…" oninput="updateDashboard()">
@@ -731,6 +734,33 @@ function buildTable(data) {
       <td style="color:var(--footer-gray)">${(r["Supervisor Name"]||"").trim()||"—"}</td>
       <td><span class="badge-${r["Survay filled"].toLowerCase()}">${r["Survay filled"]}</span></td>
     </tr>`).join("");
+}
+
+
+function downloadFile(type) {
+  const data = getFiltered();
+  const headers = ["Emp #", "EMP Name", "Grade", "Department", "Location", "Supervisor Name", "Survey Filled"];
+  const rows = data.map(r => [
+    r["Emp #"],
+    r["EMP Name"],
+    r["Grade"],
+    r["Department"],
+    r["Location"],
+    r["Supervisor Name"] || "",
+    r["Survay filled"]
+  ]);
+
+  // CSV download — no format warnings, opens cleanly in Excel
+  const csvContent = [headers, ...rows]
+    .map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(","))
+    .join("\n");
+  const blob = new Blob(["\uFEFF" + csvContent], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `Mayar_Survey_Status_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 initFilters();
