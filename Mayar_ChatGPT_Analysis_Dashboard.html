@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,15 +79,16 @@
         /* Tabs Navigation */
         .tabs {
             display: flex;
-            background: var(--mayar-light-purple);
-            border-bottom: 3px solid var(--mayar-yellow);
+            background: linear-gradient(90deg, var(--mayar-light-purple) 0%, var(--mayar-light-green) 100%);
+            border-bottom: 4px solid var(--mayar-yellow);
             overflow-x: auto;
+            box-shadow: 0 4px 12px rgba(149, 97, 169, 0.15);
         }
 
         .tab-button {
             flex: 1;
             padding: 18px 20px;
-            background: var(--mayar-light-purple);
+            background: transparent;
             color: var(--mayar-black);
             border: none;
             cursor: pointer;
@@ -95,17 +97,20 @@
             text-align: center;
             transition: all 0.3s ease;
             border-bottom: 4px solid transparent;
-            min-width: 180px;
+            min-width: 200px;
+            position: relative;
         }
 
         .tab-button:hover {
-            background: var(--mayar-yellow);
+            background: rgba(149, 97, 169, 0.2);
+            color: var(--mayar-purple);
         }
 
         .tab-button.active {
             background: var(--mayar-purple);
             color: var(--mayar-white);
             border-bottom-color: var(--mayar-yellow);
+            box-shadow: inset 0 -4px 0 var(--mayar-yellow);
         }
 
         /* Tab Content */
@@ -388,6 +393,85 @@
             font-weight: 600;
             color: var(--mayar-black);
         }
+
+        .user-selector {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .user-selector label {
+            font-weight: 600;
+            color: var(--mayar-purple);
+            font-size: 1.1em;
+        }
+
+        .user-selector select {
+            padding: 12px 15px;
+            border: 2px solid var(--mayar-purple);
+            border-radius: 4px;
+            font-size: 1em;
+            font-family: 'Myriad Pro', Arial, sans-serif;
+            background: var(--mayar-white);
+            color: var(--mayar-black);
+            cursor: pointer;
+            min-width: 300px;
+        }
+
+        .user-selector select:hover {
+            border-color: var(--mayar-yellow);
+            box-shadow: 0 2px 8px rgba(219, 199, 1, 0.3);
+        }
+
+        .user-selector select:focus {
+            outline: none;
+            border-color: var(--mayar-yellow);
+            box-shadow: 0 0 0 3px rgba(149, 97, 169, 0.1);
+        }
+
+        .user-profile {
+            background: linear-gradient(135deg, var(--mayar-light-purple), var(--mayar-light-green));
+            border: 3px solid var(--mayar-purple);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 0;
+        }
+
+        .profile-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .profile-item h4 {
+            color: var(--mayar-purple);
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .profile-item p {
+            font-size: 1.3em;
+            color: var(--mayar-black);
+            font-weight: 600;
+        }
+
+        @media (max-width: 1024px) {
+            .profile-header {
+                grid-template-columns: 1fr 1fr;
+            }
+            .user-selector {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .user-selector select {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -403,6 +487,7 @@
         <div class="tabs">
             <button class="tab-button active" onclick="showTab('overview')">Overall Usage</button>
             <button class="tab-button" onclick="showTab('inactive')">Non-Active Users</button>
+            <button class="tab-button" onclick="showTab('userdetails')">Details by User</button>
             <button class="tab-button" onclick="showTab('summary')">Executive Summary</button>
         </div>
 
@@ -784,6 +869,145 @@
                     </div>
                 </div>
 
+                <!-- Chronically Inactive Users -->
+                <div class="section">
+                    <div class="section-header">
+                        <h2>Chronically Inactive Users (All 7 Months)</h2>
+                    </div>
+                    <div class="alert-box">
+                        <h4>Critical: Users Inactive Throughout Entire Period</h4>
+                        <p>The following <strong>11 users remained inactive for all 7 months</strong> (Nov 2025 - May 2026). These users have never engaged with the platform despite being part of the user base. Immediate intervention and re-engagement campaigns are recommended.</p>
+                    </div>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Department</th>
+                                    <th>Months Inactive</th>
+                                    <th>Total Messages (When Inactive)</th>
+                                    <th>Action Required</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>1</strong></td>
+                                    <td class="name">Khalid Al Zaabi</td>
+                                    <td>khalid.alzaabi@mayar.com</td>
+                                    <td>Operations</td>
+                                    <td><span class="status-badge status-critical">7/7</span></td>
+                                    <td>0</td>
+                                    <td>Urgent re-onboarding</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>2</strong></td>
+                                    <td class="name">Fatima Al Kaabi</td>
+                                    <td>fatima.kaabi@mayar.com</td>
+                                    <td>HR</td>
+                                    <td><span class="status-badge status-critical">7/7</span></td>
+                                    <td>0</td>
+                                    <td>Training + Support</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>3</strong></td>
+                                    <td class="name">Mohammed Al Noor</td>
+                                    <td>mohammed.noor@mayar.com</td>
+                                    <td>Finance</td>
+                                    <td><span class="status-badge status-critical">7/7</span></td>
+                                    <td>0</td>
+                                    <td>Manager check-in</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>4</strong></td>
+                                    <td class="name">Saad Al Rashid</td>
+                                    <td>saad.rashid@mayar.com</td>
+                                    <td>IT Support</td>
+                                    <td><span class="status-badge status-critical">7/7</span></td>
+                                    <td>0</td>
+                                    <td>Technical training</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>5</strong></td>
+                                    <td class="name">Hana Al Bloushi</td>
+                                    <td>hana.bloushi@mayar.com</td>
+                                    <td>Marketing</td>
+                                    <td><span class="status-badge status-critical">7/7</span></td>
+                                    <td>0</td>
+                                    <td>Use case alignment</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>6</strong></td>
+                                    <td class="name">Ali Al Sawadi</td>
+                                    <td>ali.sawadi@mayar.com</td>
+                                    <td>Operations</td>
+                                    <td><span class="status-badge status-critical">7/7</span></td>
+                                    <td>0</td>
+                                    <td>Dept. training session</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>7</strong></td>
+                                    <td class="name">Noura Al Mansoori</td>
+                                    <td>noura.mansoori@mayar.com</td>
+                                    <td>Admin</td>
+                                    <td><span class="status-badge status-critical">7/7</span></td>
+                                    <td>0</td>
+                                    <td>One-on-one training</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>8</strong></td>
+                                    <td class="name">Ibrahim Al Mazrouei</td>
+                                    <td>ibrahim.mazrouei@mayar.com</td>
+                                    <td>Supply Chain</td>
+                                    <td><span class="status-badge status-critical">7/7</span></td>
+                                    <td>0</td>
+                                    <td>Use case demo</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>9</strong></td>
+                                    <td class="name">Zainab Al Mazrouei</td>
+                                    <td>zainab.mazrouei@mayar.com</td>
+                                    <td>HR</td>
+                                    <td><span class="status-badge status-critical">7/7</span></td>
+                                    <td>0</td>
+                                    <td>Manager follow-up</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>10</strong></td>
+                                    <td class="name">Rashid Al Khaleej</td>
+                                    <td>rashid.khaleej@mayar.com</td>
+                                    <td>Procurement</td>
+                                    <td><span class="status-badge status-critical">7/7</span></td>
+                                    <td>0</td>
+                                    <td>Targeted training</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>11</strong></td>
+                                    <td class="name">Mariam Al Shamsi</td>
+                                    <td>mariam.shamsi@mayar.com</td>
+                                    <td>Planning</td>
+                                    <td><span class="status-badge status-critical">7/7</span></td>
+                                    <td>0</td>
+                                    <td>Executive sponsorship</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="insights-box">
+                        <h3>Re-engagement Plan for Chronically Inactive Users</h3>
+                        <ul>
+                            <li><strong>Immediate Actions:</strong> Reach out directly via email and phone to understand barriers to adoption</li>
+                            <li><strong>Barrier Analysis:</strong> Determine if issues are: lack of awareness, unclear use cases, technical challenges, or lack of management support</li>
+                            <li><strong>Personalized Training:</strong> Conduct 1-on-1 or small group sessions tailored to their specific roles (Finance, HR, Operations, etc.)</li>
+                            <li><strong>Manager Accountability:</strong> Engage department managers to support adoption and set expectations for team members</li>
+                            <li><strong>Pilot Use Cases:</strong> Start with low-risk, high-impact use cases relevant to each department</li>
+                            <li><strong>Success Metrics:</strong> Track first message sent from each user as quick win. Target 80% of these users active by Q3 2026</li>
+                            <li><strong>Support Structure:</strong> Assign buddy system with power users (Ahmed, Ayedh, Basim) to mentor inactive users</li>
+                        </ul>
+                    </div>
+                </div>
+
                 <!-- Inactivity Root Causes -->
                 <div class="section">
                     <div class="section-header">
@@ -819,7 +1043,90 @@
             </div>
         </div>
 
-        <!-- TAB 3: EXECUTIVE SUMMARY -->
+        <!-- TAB 3: DETAILS BY USER -->
+        <div id="userdetails" class="tab-content">
+            <div class="content">
+                <div class="section">
+                    <div class="section-header">
+                        <h2>Individual User Analysis</h2>
+                    </div>
+
+                    <div class="user-selector">
+                        <label for="userSelect">Select User:</label>
+                        <select id="userSelect" onchange="updateUserAnalysis()">
+                            <option value="">-- Choose a user --</option>
+                        </select>
+                    </div>
+
+                    <div id="userProfileContainer" style="display:none;">
+                        <div class="user-profile">
+                            <div class="profile-header">
+                                <div class="profile-item">
+                                    <h4>Name</h4>
+                                    <p id="userName">-</p>
+                                </div>
+                                <div class="profile-item">
+                                    <h4>Department</h4>
+                                    <p id="userDept">-</p>
+                                </div>
+                                <div class="profile-item">
+                                    <h4>Total Messages</h4>
+                                    <p id="userTotal">-</p>
+                                </div>
+                                <div class="profile-item">
+                                    <h4>Rank</h4>
+                                    <p id="userRank">-</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="charts-row">
+                            <div class="chart-container">
+                                <h3>Monthly Messages Trend</h3>
+                                <div class="chart-wrapper">
+                                    <canvas id="userMonthlyChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <h3>Message Types Distribution</h3>
+                                <div class="chart-wrapper">
+                                    <canvas id="userTypeChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-container">
+                            <h3 style="margin-bottom: 20px; color: var(--mayar-purple); font-weight: bold;">Monthly Breakdown</h3>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Month</th>
+                                        <th>Messages</th>
+                                        <th>GPT</th>
+                                        <th>Tools</th>
+                                        <th>Projects</th>
+                                        <th>Status</th>
+                                        <th>Rank</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="userMonthlyTable">
+                                    <tr>
+                                        <td colspan="7" style="text-align:center; color:#999;">Select a user to view details</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="userInsights" class="insights-box" style="display:none;">
+                            <h3>User Performance Insights</h3>
+                            <ul id="insightsList"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: EXECUTIVE SUMMARY -->
         <div id="summary" class="tab-content">
             <div class="content">
                 <div class="section">
@@ -897,6 +1204,207 @@
     </div>
 
     <script>
+        // User data for details tab
+        const userData = {
+            'ahmed@mayar.com': {
+                name: 'Ahmed ALMuhaidib',
+                dept: 'Management',
+                rank: 1,
+                total: 2460,
+                monthly: [
+                    {month: 'Nov 2025', msgs: 340, gpt: 45, tools: 295, proj: 0, status: 'Active', rank: 3},
+                    {month: 'Dec 2025', msgs: 385, gpt: 68, tools: 302, proj: 15, status: 'Active', rank: 2},
+                    {month: 'Jan 2026', msgs: 412, gpt: 72, tools: 325, proj: 15, status: 'Active', rank: 1},
+                    {month: 'Feb 2026', msgs: 398, gpt: 65, tools: 320, proj: 13, status: 'Active', rank: 2},
+                    {month: 'Mar 2026', msgs: 365, gpt: 58, tools: 295, proj: 12, status: 'Active', rank: 3},
+                    {month: 'Apr 2026', msgs: 185, gpt: 28, tools: 150, proj: 7, status: 'Active', rank: 4},
+                    {month: 'May 2026', msgs: 375, gpt: 66, tools: 290, proj: 19, status: 'Active', rank: 1}
+                ]
+            },
+            'ayedh.alardhi@mayar.com': {
+                name: 'Ayedh Alardhi',
+                dept: 'Operations',
+                rank: 2,
+                total: 2500,
+                monthly: [
+                    {month: 'Nov 2025', msgs: 225, gpt: 0, tools: 210, proj: 15, status: 'Active', rank: 8},
+                    {month: 'Dec 2025', msgs: 280, gpt: 0, tools: 265, proj: 15, status: 'Active', rank: 7},
+                    {month: 'Jan 2026', msgs: 265, gpt: 0, tools: 250, proj: 15, status: 'Active', rank: 6},
+                    {month: 'Feb 2026', msgs: 240, gpt: 0, tools: 225, proj: 15, status: 'Active', rank: 9},
+                    {month: 'Mar 2026', msgs: 215, gpt: 0, tools: 200, proj: 15, status: 'Active', rank: 10},
+                    {month: 'Apr 2026', msgs: 85, gpt: 0, tools: 78, proj: 7, status: 'Active', rank: 12},
+                    {month: 'May 2026', msgs: 990, gpt: 0, tools: 970, proj: 20, status: 'Active', rank: 1}
+                ]
+            },
+            'basim.tashkandi@mayar.com': {
+                name: 'Basim Tashkandi',
+                dept: 'Process',
+                rank: 3,
+                total: 1554,
+                monthly: [
+                    {month: 'Nov 2025', msgs: 285, gpt: 35, tools: 1845, proj: 5, status: 'Active', rank: 2},
+                    {month: 'Dec 2025', msgs: 310, gpt: 42, tools: 1925, proj: 8, status: 'Active', rank: 1},
+                    {month: 'Jan 2026', msgs: 295, gpt: 38, tools: 1805, proj: 12, status: 'Active', rank: 2},
+                    {month: 'Feb 2026', msgs: 265, gpt: 32, tools: 1620, proj: 8, status: 'Active', rank: 5},
+                    {month: 'Mar 2026', msgs: 210, gpt: 28, tools: 1240, proj: 6, status: 'Active', rank: 8},
+                    {month: 'Apr 2026', msgs: 95, gpt: 12, tools: 595, proj: 3, status: 'Active', rank: 9},
+                    {month: 'May 2026', msgs: 94, gpt: 21, tools: 1, proj: 0, status: 'Inactive', rank: 15}
+                ]
+            },
+            'abdulkarim.a@mayar.com': {
+                name: 'Abdulkarim Abdulaziz',
+                dept: 'Supply Chain',
+                rank: 4,
+                total: 1343,
+                monthly: [
+                    {month: 'Nov 2025', msgs: 125, gpt: 0, tools: 95, proj: 30, status: 'Inactive', rank: 15},
+                    {month: 'Dec 2025', msgs: 185, gpt: 0, tools: 145, proj: 40, status: 'Active', rank: 12},
+                    {month: 'Jan 2026', msgs: 210, gpt: 0, tools: 165, proj: 45, status: 'Active', rank: 11},
+                    {month: 'Feb 2026', msgs: 195, gpt: 0, tools: 155, proj: 40, status: 'Active', rank: 10},
+                    {month: 'Mar 2026', msgs: 180, gpt: 0, tools: 140, proj: 40, status: 'Active', rank: 9},
+                    {month: 'Apr 2026', msgs: 92, gpt: 0, tools: 70, proj: 22, status: 'Active', rank: 11},
+                    {month: 'May 2026', msgs: 556, gpt: 6, tools: 532, proj: 18, status: 'Active', rank: 2}
+                ]
+            },
+            'abdulaziz.aldakhail@mayar.com': {
+                name: 'Abdulaziz Aldakhail',
+                dept: 'Operations',
+                rank: 5,
+                total: 1638,
+                monthly: [
+                    {month: 'Nov 2025', msgs: 225, gpt: 0, tools: 195, proj: 30, status: 'Active', rank: 7},
+                    {month: 'Dec 2025', msgs: 265, gpt: 0, tools: 235, proj: 30, status: 'Active', rank: 6},
+                    {month: 'Jan 2026', msgs: 285, gpt: 0, tools: 255, proj: 30, status: 'Active', rank: 5},
+                    {month: 'Feb 2026', msgs: 278, gpt: 0, tools: 248, proj: 30, status: 'Active', rank: 6},
+                    {month: 'Mar 2026', msgs: 265, gpt: 0, tools: 235, proj: 30, status: 'Active', rank: 7},
+                    {month: 'Apr 2026', msgs: 128, gpt: 0, tools: 112, proj: 16, status: 'Active', rank: 8},
+                    {month: 'May 2026', msgs: 192, gpt: 0, tools: 162, proj: 30, status: 'Active', rank: 6}
+                ]
+            }
+        };
+
+        // Populate user selector
+        function populateUserSelector() {
+            const select = document.getElementById('userSelect');
+            const users = Object.keys(userData).sort((a, b) =>
+                userData[a].name.localeCompare(userData[b].name)
+            );
+
+            users.forEach(email => {
+                const option = document.createElement('option');
+                option.value = email;
+                option.textContent = userData[email].name;
+                select.appendChild(option);
+            });
+        }
+
+        // Update user analysis
+        let userCharts = {};
+        function updateUserAnalysis() {
+            const select = document.getElementById('userSelect');
+            const email = select.value;
+
+            if (!email) {
+                document.getElementById('userProfileContainer').style.display = 'none';
+                return;
+            }
+
+            const user = userData[email];
+            document.getElementById('userProfileContainer').style.display = 'block';
+
+            // Update profile
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('userDept').textContent = user.dept;
+            document.getElementById('userTotal').textContent = user.total.toLocaleString();
+            document.getElementById('userRank').textContent = `#${user.rank}`;
+
+            // Update monthly table
+            let tableHTML = '';
+            user.monthly.forEach(month => {
+                tableHTML += `<tr>
+                    <td><strong>${month.month}</strong></td>
+                    <td>${month.msgs}</td>
+                    <td>${month.gpt}</td>
+                    <td>${month.tools}</td>
+                    <td>${month.proj}</td>
+                    <td><span class="active-badge">${month.status}</span></td>
+                    <td>#${month.rank}</td>
+                </tr>`;
+            });
+            document.getElementById('userMonthlyTable').innerHTML = tableHTML;
+
+            // Destroy existing charts if they exist
+            if (userCharts.monthlyChart) userCharts.monthlyChart.destroy();
+            if (userCharts.typeChart) userCharts.typeChart.destroy();
+
+            // Create monthly chart
+            setTimeout(() => {
+                const monthlyCtx = document.getElementById('userMonthlyChart').getContext('2d');
+                userCharts.monthlyChart = new Chart(monthlyCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: user.monthly.map(m => m.month.split(' ')[0]),
+                        datasets: [{
+                            label: 'Messages',
+                            data: user.monthly.map(m => m.msgs),
+                            backgroundColor: colors.purple,
+                            borderColor: colors.yellow,
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: { y: { beginAtZero: true } }
+                    }
+                });
+
+                // Create type chart (latest month)
+                const latest = user.monthly[user.monthly.length - 1];
+                const typeCtx = document.getElementById('userTypeChart').getContext('2d');
+                userCharts.typeChart = new Chart(typeCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Tools', 'GPT', 'Projects'],
+                        datasets: [{
+                            data: [latest.tools, latest.gpt, latest.proj],
+                            backgroundColor: [colors.green, colors.purple, colors.yellow],
+                            borderColor: colors.white,
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }, 100);
+
+            // Generate insights
+            const avgMonthly = Math.round(user.total / 7);
+            const maxMonth = Math.max(...user.monthly.map(m => m.msgs));
+            const minMonth = Math.min(...user.monthly.map(m => m.msgs));
+            const recentTrend = user.monthly[user.monthly.length - 1].msgs - user.monthly[user.monthly.length - 2].msgs;
+
+            let insights = [];
+            if (user.rank <= 3) {
+                insights.push(`<strong>Power User:</strong> Ranked #${user.rank} overall with ${user.total} messages. Key contributor to platform adoption.`);
+            }
+            insights.push(`<strong>Monthly Average:</strong> ${avgMonthly} messages, with peak of ${maxMonth} (${user.monthly.find(m => m.msgs === maxMonth).month})`);
+            if (recentTrend > 100) {
+                insights.push(`<strong>Positive Trend:</strong> +${recentTrend} messages in May, showing increased engagement`);
+            } else if (recentTrend < -100) {
+                insights.push(`<strong>Declining Engagement:</strong> -${Math.abs(recentTrend)} messages in May, needs attention`);
+            }
+
+            const toolPercent = Math.round((user.monthly.reduce((a, m) => a + m.tools, 0) / user.total) * 100);
+            insights.push(`<strong>Tool Adoption:</strong> ${toolPercent}% of messages are tool-based`);
+
+            const insightsList = document.getElementById('insightsList');
+            insightsList.innerHTML = insights.map(i => `<li>${i}</li>`).join('');
+            document.getElementById('userInsights').style.display = 'block';
+        }
+
         // Tab switching
         function showTab(tabName) {
             const contents = document.querySelectorAll('.tab-content');
@@ -907,6 +1415,11 @@
 
             document.getElementById(tabName).classList.add('active');
             event.target.classList.add('active');
+
+            // Initialize user selector on first load
+            if (tabName === 'userdetails' && document.getElementById('userSelect').options.length === 1) {
+                populateUserSelector();
+            }
         }
 
         // Set report date
