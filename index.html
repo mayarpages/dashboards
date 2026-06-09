@@ -471,6 +471,7 @@
           <tr>
             <th>Emp #</th>
             <th>Employee Name</th>
+            <th>Job Title</th>
             <th>Grade</th>
             <th>Department</th>
             <th>Location</th>
@@ -722,13 +723,14 @@ function buildTable(data) {
   document.getElementById("tableCount").textContent = `${data.length} employees`;
   const tbody = document.getElementById("empTableBody");
   if (!data.length) {
-    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:28px;color:#BFBFBF;font-style:italic;">No employees match the selected filters.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:28px;color:#BFBFBF;font-style:italic;">No employees match the selected filters.</td></tr>`;
     return;
   }
   tbody.innerHTML = data.map(r => `
     <tr>
       <td style="font-size:0.72rem;color:var(--purple);font-weight:600">${r["Emp #"]}</td>
       <td class="emp-name">${r["EMP Name"].trim() || "—"}</td>
+      <td style="font-size:0.75rem;color:#555;">${(r["Job Classification"]||"").trim()||"—"}</td>
       <td><span style="background:var(--purple-bg);color:var(--purple-dark);font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:10px;">${r["Grade"]}</span></td>
       <td>${r["Department"]}</td>
       <td>${r["Location"]}</td>
