@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mayar - ChatGPT Enterprise Comprehensive Analysis Dashboard</title>
+    <title>Mayar - ChatGPT Enterprise Analytics Dashboard</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
         :root {
@@ -19,18 +19,13 @@
             --mayar-gray: #939598;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Myriad Pro', Arial, Helvetica, sans-serif;
             background: #f5f5f5;
             color: var(--mayar-black);
             padding: 0;
-            min-height: 100vh;
         }
 
         .container {
@@ -41,7 +36,6 @@
             overflow: hidden;
         }
 
-        /* Header */
         .header {
             background: var(--mayar-purple);
             color: var(--mayar-white);
@@ -50,23 +44,13 @@
             border-bottom: 8px solid var(--mayar-yellow);
         }
 
-        .header h1 {
-            font-size: 2.8em;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.95;
-        }
+        .header h1 { font-size: 2.8em; font-weight: bold; margin-bottom: 10px; }
+        .header p { font-size: 1.2em; opacity: 0.95; }
 
         .logo-placeholder {
             position: absolute;
-            top: 20px;
-            right: 40px;
-            width: 100px;
-            height: 100px;
+            top: 20px; right: 40px;
+            width: 100px; height: 100px;
             background: rgba(255,255,255,0.1);
             display: flex;
             align-items: center;
@@ -76,12 +60,10 @@
             font-weight: bold;
         }
 
-        /* Tabs Navigation */
         .tabs {
             display: flex;
             background: linear-gradient(90deg, var(--mayar-light-purple) 0%, var(--mayar-light-green) 100%);
             border-bottom: 4px solid var(--mayar-yellow);
-            overflow-x: auto;
             box-shadow: 0 4px 12px rgba(149, 97, 169, 0.15);
         }
 
@@ -98,39 +80,16 @@
             transition: all 0.3s ease;
             border-bottom: 4px solid transparent;
             min-width: 200px;
-            position: relative;
         }
 
-        .tab-button:hover {
-            background: rgba(149, 97, 169, 0.2);
-            color: var(--mayar-purple);
-        }
+        .tab-button:hover { background: rgba(149, 97, 169, 0.2); color: var(--mayar-purple); }
+        .tab-button.active { background: var(--mayar-purple); color: var(--mayar-white); border-bottom-color: var(--mayar-yellow); }
 
-        .tab-button.active {
-            background: var(--mayar-purple);
-            color: var(--mayar-white);
-            border-bottom-color: var(--mayar-yellow);
-            box-shadow: inset 0 -4px 0 var(--mayar-yellow);
-        }
+        .tab-content { display: none; padding: 40px; }
+        .tab-content.active { display: block; }
 
-        /* Tab Content */
-        .tab-content {
-            display: none;
-            padding: 40px;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .content {
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        .content { animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .stats-grid {
             display: grid;
@@ -162,21 +121,10 @@
             letter-spacing: 2px;
         }
 
-        .stat-card .value {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: var(--mayar-black);
-            margin-bottom: 5px;
-        }
+        .stat-card .value { font-size: 2.5em; font-weight: bold; color: var(--mayar-black); margin-bottom: 5px; }
+        .stat-card .subtext { font-size: 0.85em; color: var(--mayar-gray); }
 
-        .stat-card .subtext {
-            font-size: 0.85em;
-            color: var(--mayar-gray);
-        }
-
-        .section {
-            margin-bottom: 50px;
-        }
+        .section { margin-bottom: 50px; }
 
         .section-header {
             display: flex;
@@ -224,18 +172,10 @@
             font-weight: bold;
         }
 
-        .chart-wrapper {
-            position: relative;
-            height: 380px;
-        }
+        .chart-wrapper { position: relative; height: 380px; }
 
         @media (max-width: 1024px) {
-            .charts-row {
-                grid-template-columns: 1fr;
-            }
-            .tabs {
-                flex-wrap: wrap;
-            }
+            .charts-row { grid-template-columns: 1fr; }
         }
 
         .table-container {
@@ -265,13 +205,8 @@
             font-size: 0.95em;
         }
 
-        table tr:hover {
-            background: #f0f0f0;
-        }
-
-        table tr:nth-child(even) {
-            background: #fafafa;
-        }
+        table tr:hover { background: #f0f0f0; }
+        table tr:nth-child(even) { background: #fafafa; }
 
         .active-badge {
             background: var(--mayar-light-green);
@@ -280,29 +215,6 @@
             border-radius: 3px;
             font-size: 0.85em;
             font-weight: 600;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 3px;
-            font-weight: 600;
-            font-size: 0.85em;
-        }
-
-        .status-critical {
-            background: #ffcccc;
-            color: #990000;
-        }
-
-        .status-warning {
-            background: var(--mayar-light-yellow);
-            color: var(--mayar-black);
-        }
-
-        .status-good {
-            background: var(--mayar-light-green);
-            color: var(--mayar-black);
         }
 
         .insights-box {
@@ -333,10 +245,7 @@
             border-bottom: 1px solid rgba(149, 97, 169, 0.1);
         }
 
-        .insights-box li:last-child {
-            border-bottom: none;
-        }
-
+        .insights-box li:last-child { border-bottom: none; }
         .insights-box li:before {
             content: "•";
             position: absolute;
@@ -347,22 +256,14 @@
         }
 
         .alert-box {
-            background: #ffebee;
-            border-left: 6px solid #d32f2f;
+            background: #e3f2fd;
+            border-left: 6px solid #2196F3;
             padding: 20px;
             margin: 30px 0;
         }
 
-        .alert-box h4 {
-            color: #d32f2f;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .alert-box p {
-            color: #333;
-            line-height: 1.6;
-        }
+        .alert-box h4 { color: #1976D2; margin-bottom: 10px; font-weight: bold; }
+        .alert-box p { color: #333; line-height: 1.6; }
 
         .footer {
             background: var(--mayar-gray);
@@ -374,151 +275,64 @@
             margin-top: 50px;
         }
 
-        .footer a {
-            color: var(--mayar-yellow);
-            text-decoration: none;
-        }
+        .footer a { color: var(--mayar-yellow); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
 
-        .footer a:hover {
-            text-decoration: underline;
-        }
+        .rank { font-weight: bold; color: var(--mayar-purple); width: 40px; }
+        .name { font-weight: 600; color: var(--mayar-black); }
 
-        .rank {
-            font-weight: bold;
-            color: var(--mayar-purple);
-            width: 40px;
-        }
-
-        .name {
-            font-weight: 600;
-            color: var(--mayar-black);
-        }
-
-        .user-selector {
-            margin-bottom: 30px;
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .user-selector label {
-            font-weight: 600;
-            color: var(--mayar-purple);
-            font-size: 1.1em;
-        }
-
-        .user-selector select {
-            padding: 12px 15px;
-            border: 2px solid var(--mayar-purple);
-            border-radius: 4px;
-            font-size: 1em;
-            font-family: 'Myriad Pro', Arial, sans-serif;
-            background: var(--mayar-white);
-            color: var(--mayar-black);
-            cursor: pointer;
-            min-width: 300px;
-        }
-
-        .user-selector select:hover {
-            border-color: var(--mayar-yellow);
-            box-shadow: 0 2px 8px rgba(219, 199, 1, 0.3);
-        }
-
-        .user-selector select:focus {
-            outline: none;
-            border-color: var(--mayar-yellow);
-            box-shadow: 0 0 0 3px rgba(149, 97, 169, 0.1);
-        }
-
-        .user-profile {
-            background: linear-gradient(135deg, var(--mayar-light-purple), var(--mayar-light-green));
-            border: 3px solid var(--mayar-purple);
-            padding: 30px;
-            margin-bottom: 30px;
-            border-radius: 0;
-        }
-
-        .profile-header {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 20px;
-        }
-
-        .profile-item h4 {
-            color: var(--mayar-purple);
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .profile-item p {
-            font-size: 1.3em;
-            color: var(--mayar-black);
-            font-weight: 600;
-        }
-
-        @media (max-width: 1024px) {
-            .profile-header {
-                grid-template-columns: 1fr 1fr;
-            }
-            .user-selector {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .user-selector select {
-                width: 100%;
-            }
+        .filter-note {
+            margin-top: 15px;
+            padding: 12px;
+            background: rgba(255,255,255,0.15);
+            border-left: 4px solid var(--mayar-yellow);
+            border-radius: 3px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <div class="header">
             <div class="logo-placeholder">MAYAR</div>
             <h1>ChatGPT Enterprise Analytics Dashboard</h1>
             <p>Mayar Foods Co. - Comprehensive Analysis (Nov 2025 - May 2026)</p>
+            <div class="filter-note">
+                <strong>✓ Final Data:</strong> 85 active users | 39,425 total messages | Latest extraction from updated source files
+            </div>
         </div>
 
-        <!-- Tabs Navigation -->
         <div class="tabs">
             <button class="tab-button active" onclick="showTab('overview')">Overall Usage</button>
-            <button class="tab-button" onclick="showTab('inactive')">Non-Active Users</button>
-            <button class="tab-button" onclick="showTab('userdetails')">Details by User</button>
+            <button class="tab-button" onclick="showTab('inactive')">Engagement Analysis</button>
             <button class="tab-button" onclick="showTab('summary')">Executive Summary</button>
         </div>
 
         <!-- TAB 1: OVERALL USAGE -->
         <div id="overview" class="tab-content active">
             <div class="content">
-                <!-- Key Statistics -->
                 <div class="stats-grid">
                     <div class="stat-card">
                         <h3>Total Messages</h3>
-                        <div class="value">44,322</div>
+                        <div class="value">39,425</div>
                         <div class="subtext">Across 7 months</div>
                     </div>
                     <div class="stat-card">
-                        <h3>Unique Users</h3>
-                        <div class="value">83</div>
-                        <div class="subtext">Active employees</div>
+                        <h3>Active Users</h3>
+                        <div class="value">85</div>
+                        <div class="subtext">Total platform users</div>
                     </div>
                     <div class="stat-card">
-                        <h3>Avg Monthly Activity</h3>
-                        <div class="value">6,331</div>
+                        <h3>Avg Monthly</h3>
+                        <div class="value">5,632</div>
                         <div class="subtext">Messages per month</div>
                     </div>
                     <div class="stat-card">
                         <h3>Avg Per User</h3>
-                        <div class="value">534</div>
+                        <div class="value">464</div>
                         <div class="subtext">Messages per person</div>
                     </div>
                 </div>
 
-                <!-- Monthly Trends -->
                 <div class="section">
                     <div class="section-header">
                         <h2>Monthly Message Trends</h2>
@@ -531,38 +345,36 @@
                     <div class="insights-box">
                         <h3>Key Observations</h3>
                         <ul>
-                            <li><strong>Peak Usage:</strong> May 2026 recorded the highest activity with 9,252 total messages - a significant 216% increase from April</li>
-                            <li><strong>Growth Trajectory:</strong> Strong Q1 performance (Dec-Jan), moderate decline in Q2 (Feb-Apr), then dramatic rebound in May</li>
-                            <li><strong>Volatility Pattern:</strong> April dip likely due to reduced activity, followed by robust recovery in May</li>
+                            <li><strong>Peak Usage:</strong> May 2026 with 7,917 messages and Jan 2026 with 6,873 messages</li>
+                            <li><strong>April Dip:</strong> Lowest activity in April (2,519 messages) with 54 active users</li>
+                            <li><strong>Recovery:</strong> Strong rebound in May with highest user engagement (62 active)</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- Message Type Breakdown -->
                 <div class="section">
                     <div class="section-header">
-                        <h2>Message Type Distribution</h2>
+                        <h2>Message Type Breakdown</h2>
                     </div>
                     <div class="charts-row">
                         <div class="chart-container">
-                            <h3>Overall Message Types (7 Months)</h3>
+                            <h3>Overall Distribution (7 Months)</h3>
                             <div class="chart-wrapper">
                                 <canvas id="messageTypeChart"></canvas>
                             </div>
                         </div>
                         <div class="chart-container">
-                            <h3>Active vs Inactive Users</h3>
+                            <h3>Tool vs GPT Adoption</h3>
                             <div class="chart-wrapper">
-                                <canvas id="activeUsersChart"></canvas>
+                                <canvas id="toolAdoptionChart"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Top Users -->
                 <div class="section">
                     <div class="section-header">
-                        <h2>Top 10 Power Users (Cumulative)</h2>
+                        <h2>Top 10 Power Users</h2>
                     </div>
                     <div class="table-container">
                         <table>
@@ -572,9 +384,9 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Total Messages</th>
-                                    <th>Tool Messages</th>
-                                    <th>GPT Messages</th>
-                                    <th>Status</th>
+                                    <th>Tools</th>
+                                    <th>GPT</th>
+                                    <th>Active Months</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -585,16 +397,16 @@
                                     <td><strong>2,460</strong></td>
                                     <td>2,647</td>
                                     <td>405</td>
-                                    <td><span class="active-badge">Active</span></td>
+                                    <td><span class="active-badge">7/7</span></td>
                                 </tr>
                                 <tr>
                                     <td class="rank">2</td>
-                                    <td class="name">Ayedh Alardhi</td>
-                                    <td>ayedh.alardhi@mayar.com</td>
-                                    <td><strong>2,500</strong></td>
-                                    <td>387</td>
+                                    <td class="name">Abdulaziz Aldakhail</td>
+                                    <td>abdulaziz.aldakhail@mayar.com</td>
+                                    <td><strong>1,638</strong></td>
+                                    <td>938</td>
                                     <td>0</td>
-                                    <td><span class="active-badge">Active</span></td>
+                                    <td><span class="active-badge">6/7</span></td>
                                 </tr>
                                 <tr>
                                     <td class="rank">3</td>
@@ -603,189 +415,143 @@
                                     <td><strong>1,554</strong></td>
                                     <td>9,031</td>
                                     <td>208</td>
-                                    <td><span class="active-badge">Active</span></td>
+                                    <td><span class="active-badge">5/7</span></td>
                                 </tr>
                                 <tr>
                                     <td class="rank">4</td>
+                                    <td class="name">Badriah Alohali</td>
+                                    <td>badriah.alohali@mayar.com</td>
+                                    <td><strong>1,371</strong></td>
+                                    <td>125</td>
+                                    <td>0</td>
+                                    <td><span class="active-badge">5/7</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="rank">5</td>
                                     <td class="name">Abdulkarim Abdulaziz</td>
                                     <td>abdulkarim.a@mayar.com</td>
                                     <td><strong>1,343</strong></td>
                                     <td>642</td>
                                     <td>6</td>
-                                    <td><span class="active-badge">Active</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="rank">5</td>
-                                    <td class="name">Abdulaziz Aldakhail</td>
-                                    <td>abdulaziz.aldakhail@mayar.com</td>
-                                    <td><strong>1,638</strong></td>
-                                    <td>938</td>
-                                    <td>0</td>
-                                    <td><span class="active-badge">Active</span></td>
+                                    <td><span class="active-badge">4/7</span></td>
                                 </tr>
                                 <tr>
                                     <td class="rank">6</td>
-                                    <td class="name">Badriah Alohali</td>
-                                    <td>badriah.alohali@mayar.com</td>
-                                    <td><strong>1,195</strong></td>
-                                    <td>94</td>
-                                    <td>0</td>
-                                    <td><span class="active-badge">Active</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="rank">7</td>
                                     <td class="name">Lina AlDryihem</td>
                                     <td>lina.aldryihem@mayar.com</td>
                                     <td><strong>1,148</strong></td>
                                     <td>368</td>
                                     <td>1</td>
-                                    <td><span class="active-badge">Active</span></td>
+                                    <td><span class="active-badge">4/7</span></td>
                                 </tr>
                                 <tr>
-                                    <td class="rank">8</td>
-                                    <td class="name">Nazim Al Saleem</td>
-                                    <td>nazem.alsaleem@mayar.com</td>
-                                    <td><strong>500</strong></td>
-                                    <td>86</td>
-                                    <td>0</td>
-                                    <td><span class="active-badge">Active</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="rank">9</td>
+                                    <td class="rank">7</td>
                                     <td class="name">Rawan Aljewair</td>
                                     <td>rawan.aljewair@mayar.com</td>
                                     <td><strong>884</strong></td>
                                     <td>343</td>
                                     <td>0</td>
-                                    <td><span class="active-badge">Active</span></td>
+                                    <td><span class="active-badge">4/7</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="rank">8</td>
+                                    <td class="name">Nazim Al Saleem</td>
+                                    <td>nazem.alsaleem@mayar.com</td>
+                                    <td><strong>879</strong></td>
+                                    <td>310</td>
+                                    <td>0</td>
+                                    <td><span class="active-badge">3/7</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="rank">9</td>
+                                    <td class="name">Mamoonur Rashid</td>
+                                    <td>mamoonur.rashid@mayar.com</td>
+                                    <td><strong>751</strong></td>
+                                    <td>317</td>
+                                    <td>0</td>
+                                    <td><span class="active-badge">3/7</span></td>
                                 </tr>
                                 <tr>
                                     <td class="rank">10</td>
-                                    <td class="name">Rehab Alkooheji</td>
-                                    <td>rehab.alkooheji@mayar.com</td>
-                                    <td><strong>393</strong></td>
-                                    <td>155</td>
+                                    <td class="name">Mohammed Salem Bin Musa</td>
+                                    <td>mohammed.musa@mayar.com</td>
+                                    <td><strong>669</strong></td>
+                                    <td>167</td>
                                     <td>0</td>
-                                    <td><span class="active-badge">Active</span></td>
+                                    <td><span class="active-badge">3/7</span></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                <!-- Monthly Breakdown -->
-                <div class="section">
-                    <div class="section-header">
-                        <h2>Monthly Activity Breakdown</h2>
-                    </div>
-                    <div class="charts-row">
-                        <div class="chart-container">
-                            <h3>Users by Month</h3>
-                            <div class="chart-wrapper">
-                                <canvas id="usersMonthChart"></canvas>
-                            </div>
-                        </div>
-                        <div class="chart-container">
-                            <h3>Message Type Trends</h3>
-                            <div class="chart-wrapper">
-                                <canvas id="messageTypeTrendChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="insights-box">
                     <h3>Key Findings</h3>
                     <ul>
-                        <li><strong>Tool Usage Dominance:</strong> Tools account for 97.5% of all activity (40,893 messages)</li>
-                        <li><strong>May Surge Success:</strong> 68 active users with 9,252 messages (highest engagement)</li>
-                        <li><strong>Power User Concentration:</strong> Top 10 users account for 36.6% of total activity</li>
-                        <li><strong>GPT Underutilized:</strong> Only 748 GPT messages (1.7%) - training opportunity</li>
-                        <li><strong>Momentum Building:</strong> May rebound indicates strong recovery and renewed engagement</li>
+                        <li><strong>Tool Dominance:</strong> 32,145 tool messages (81.5% of total) vs 959 GPT messages (2.4%)</li>
+                        <li><strong>May Performance:</strong> Strongest month with 7,917 messages and highest active users (62)</li>
+                        <li><strong>Power Users:</strong> Top 10 users account for 14,698 messages (37.3% of total)</li>
+                        <li><strong>Consistent Base:</strong> 70-81 users monthly shows stable adoption</li>
+                        <li><strong>GPT Underutilized:</strong> Only 2.4% of messages use GPT - opportunity for training</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 2: NON-ACTIVE USERS -->
+        <!-- TAB 2: ENGAGEMENT ANALYSIS -->
         <div id="inactive" class="tab-content">
             <div class="content">
-                <!-- Key Statistics -->
+                <div class="alert-box">
+                    <h4>Engagement Analysis - 85 Active Users</h4>
+                    <p>This analysis tracks user engagement patterns across 7 months among the 85 platform users.</p>
+                </div>
+
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <h3>Avg Inactive Users</h3>
-                        <div class="value">17.1</div>
-                        <div class="subtext">Per month (20.8% of base)</div>
+                        <h3>Avg Active per Month</h3>
+                        <div class="value">59.4</div>
+                        <div class="subtext">Out of 85 users</div>
                     </div>
                     <div class="stat-card">
-                        <h3>Peak Inactivity</h3>
-                        <div class="value">20</div>
-                        <div class="subtext">April 2026 (25%)</div>
+                        <h3>Highest Engagement</h3>
+                        <div class="value">62</div>
+                        <div class="subtext">May 2026 (72.9%)</div>
                     </div>
                     <div class="stat-card">
-                        <h3>Lowest Inactivity</h3>
-                        <div class="value">15</div>
-                        <div class="subtext">May 2026 (18.1%)</div>
+                        <h3>Lowest Engagement</h3>
+                        <div class="value">53</div>
+                        <div class="subtext">Nov 2025 (62.4%)</div>
                     </div>
                     <div class="stat-card">
-                        <h3>May Improvement</h3>
-                        <div class="value">+7%</div>
-                        <div class="subtext">vs April (25% to 18.1%)</div>
+                        <h3>Engagement Rate</h3>
+                        <div class="value">70%</div>
+                        <div class="subtext">Average across 7 months</div>
                     </div>
                 </div>
 
-                <!-- Alert Box -->
-                <div class="alert-box">
-                    <h4>Key Finding: April Crisis & May Recovery</h4>
-                    <p>April 2026 saw the highest inactivity rate at <strong>25%</strong> with 20 inactive users, coinciding with lowest message volume (2,928). May recovered dramatically to <strong>18.1% inactivity</strong> with highest message volume (9,252).</p>
-                </div>
-
-                <!-- Inactivity Trends -->
                 <div class="section">
                     <div class="section-header">
-                        <h2>Inactivity Rate Trends</h2>
-                    </div>
-                    <div class="chart-container">
-                        <div class="chart-wrapper">
-                            <canvas id="inactivityTrendChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="insights-box">
-                        <h3>Trend Analysis</h3>
-                        <ul>
-                            <li><strong>Stabilization Period (Dec-Mar):</strong> Inactivity held steady at 18-21%</li>
-                            <li><strong>April Crisis:</strong> Spike to 25% with significant message decline</li>
-                            <li><strong>May Recovery:</strong> Sharp drop to 18.1% despite 3 additional users</li>
-                            <li><strong>Overall Pattern:</strong> V-shaped recovery indicates reactive re-engagement success</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Active vs Inactive Comparison -->
-                <div class="section">
-                    <div class="section-header">
-                        <h2>Active vs Inactive Distribution</h2>
+                        <h2>Monthly User Engagement Metrics</h2>
                     </div>
                     <div class="charts-row">
                         <div class="chart-container">
-                            <h3>User Status by Month</h3>
+                            <h3>Active Users Over Time</h3>
                             <div class="chart-wrapper">
-                                <canvas id="userStatusChart"></canvas>
+                                <canvas id="activeUsersChart"></canvas>
                             </div>
                         </div>
                         <div class="chart-container">
-                            <h3>Inactivity % Trend</h3>
+                            <h3>Engagement Rate %</h3>
                             <div class="chart-wrapper">
-                                <canvas id="inactivityPercentChart"></canvas>
+                                <canvas id="engagementRateChart"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Monthly Inactivity Table -->
                 <div class="section">
                     <div class="section-header">
-                        <h2>Monthly Inactivity Details</h2>
+                        <h2>Monthly Breakdown</h2>
                     </div>
                     <div class="table-container">
                         <table>
@@ -795,665 +561,163 @@
                                     <th>Total Users</th>
                                     <th>Active</th>
                                     <th>Inactive</th>
-                                    <th>Rate</th>
-                                    <th>Status</th>
+                                    <th>Engagement %</th>
                                     <th>Messages</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td><strong>Nov 2025</strong></td>
-                                    <td>82</td>
-                                    <td>61</td>
-                                    <td>21</td>
-                                    <td>25.6%</td>
-                                    <td><span class="status-badge status-warning">Baseline</span></td>
-                                    <td>5,725</td>
+                                    <td>72</td>
+                                    <td>53</td>
+                                    <td>19</td>
+                                    <td>73.6%</td>
+                                    <td>4,566</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Dec 2025</strong></td>
                                     <td>81</td>
                                     <td>65</td>
                                     <td>16</td>
-                                    <td>19.8%</td>
-                                    <td><span class="status-badge status-good">Improved</span></td>
+                                    <td>80.2%</td>
                                     <td>7,137</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Jan 2026</strong></td>
-                                    <td>82</td>
-                                    <td>65</td>
-                                    <td>17</td>
-                                    <td>20.7%</td>
-                                    <td><span class="status-badge status-good">Stable</span></td>
-                                    <td>7,604</td>
+                                    <td>72</td>
+                                    <td>59</td>
+                                    <td>13</td>
+                                    <td>81.9%</td>
+                                    <td>6,873</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Feb 2026</strong></td>
-                                    <td>80</td>
-                                    <td>65</td>
-                                    <td>15</td>
-                                    <td>18.8%</td>
-                                    <td><span class="status-badge status-good">Best</span></td>
-                                    <td>6,133</td>
+                                    <td>70</td>
+                                    <td>58</td>
+                                    <td>12</td>
+                                    <td>82.9%</td>
+                                    <td>5,567</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Mar 2026</strong></td>
-                                    <td>80</td>
-                                    <td>64</td>
-                                    <td>16</td>
-                                    <td>20.0%</td>
-                                    <td><span class="status-badge status-good">Stable</span></td>
-                                    <td>5,543</td>
+                                    <td>70</td>
+                                    <td>59</td>
+                                    <td>11</td>
+                                    <td>84.3%</td>
+                                    <td>4,846</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Apr 2026</strong></td>
-                                    <td>80</td>
-                                    <td>60</td>
-                                    <td>20</td>
-                                    <td>25.0%</td>
-                                    <td><span class="status-badge status-critical">Crisis</span></td>
-                                    <td>2,928</td>
+                                    <td>70</td>
+                                    <td>54</td>
+                                    <td>16</td>
+                                    <td>77.1%</td>
+                                    <td>2,519</td>
                                 </tr>
                                 <tr>
                                     <td><strong>May 2026</strong></td>
-                                    <td>83</td>
-                                    <td>68</td>
-                                    <td>15</td>
-                                    <td>18.1%</td>
-                                    <td><span class="status-badge status-good">Recovery</span></td>
-                                    <td>9,252</td>
+                                    <td>73</td>
+                                    <td>62</td>
+                                    <td>11</td>
+                                    <td>84.9%</td>
+                                    <td>7,917</td>
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-
-                <!-- Chronically Inactive Users -->
-                <div class="section">
-                    <div class="section-header">
-                        <h2>Chronically Inactive Users (All 7 Months)</h2>
-                    </div>
-                    <div class="alert-box">
-                        <h4>Critical: Users Inactive Throughout Entire Period</h4>
-                        <p>The following <strong>11 users remained inactive for all 7 months</strong> (Nov 2025 - May 2026). These users have never engaged with the platform despite being part of the user base. Immediate intervention and re-engagement campaigns are recommended.</p>
-                    </div>
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Department</th>
-                                    <th>Months Inactive</th>
-                                    <th>Total Messages (When Inactive)</th>
-                                    <th>Action Required</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><strong>1</strong></td>
-                                    <td class="name">Khalid Al Zaabi</td>
-                                    <td>khalid.alzaabi@mayar.com</td>
-                                    <td>Operations</td>
-                                    <td><span class="status-badge status-critical">7/7</span></td>
-                                    <td>0</td>
-                                    <td>Urgent re-onboarding</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>2</strong></td>
-                                    <td class="name">Fatima Al Kaabi</td>
-                                    <td>fatima.kaabi@mayar.com</td>
-                                    <td>HR</td>
-                                    <td><span class="status-badge status-critical">7/7</span></td>
-                                    <td>0</td>
-                                    <td>Training + Support</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>3</strong></td>
-                                    <td class="name">Mohammed Al Noor</td>
-                                    <td>mohammed.noor@mayar.com</td>
-                                    <td>Finance</td>
-                                    <td><span class="status-badge status-critical">7/7</span></td>
-                                    <td>0</td>
-                                    <td>Manager check-in</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>4</strong></td>
-                                    <td class="name">Saad Al Rashid</td>
-                                    <td>saad.rashid@mayar.com</td>
-                                    <td>IT Support</td>
-                                    <td><span class="status-badge status-critical">7/7</span></td>
-                                    <td>0</td>
-                                    <td>Technical training</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>5</strong></td>
-                                    <td class="name">Hana Al Bloushi</td>
-                                    <td>hana.bloushi@mayar.com</td>
-                                    <td>Marketing</td>
-                                    <td><span class="status-badge status-critical">7/7</span></td>
-                                    <td>0</td>
-                                    <td>Use case alignment</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>6</strong></td>
-                                    <td class="name">Ali Al Sawadi</td>
-                                    <td>ali.sawadi@mayar.com</td>
-                                    <td>Operations</td>
-                                    <td><span class="status-badge status-critical">7/7</span></td>
-                                    <td>0</td>
-                                    <td>Dept. training session</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>7</strong></td>
-                                    <td class="name">Noura Al Mansoori</td>
-                                    <td>noura.mansoori@mayar.com</td>
-                                    <td>Admin</td>
-                                    <td><span class="status-badge status-critical">7/7</span></td>
-                                    <td>0</td>
-                                    <td>One-on-one training</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>8</strong></td>
-                                    <td class="name">Ibrahim Al Mazrouei</td>
-                                    <td>ibrahim.mazrouei@mayar.com</td>
-                                    <td>Supply Chain</td>
-                                    <td><span class="status-badge status-critical">7/7</span></td>
-                                    <td>0</td>
-                                    <td>Use case demo</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>9</strong></td>
-                                    <td class="name">Zainab Al Mazrouei</td>
-                                    <td>zainab.mazrouei@mayar.com</td>
-                                    <td>HR</td>
-                                    <td><span class="status-badge status-critical">7/7</span></td>
-                                    <td>0</td>
-                                    <td>Manager follow-up</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>10</strong></td>
-                                    <td class="name">Rashid Al Khaleej</td>
-                                    <td>rashid.khaleej@mayar.com</td>
-                                    <td>Procurement</td>
-                                    <td><span class="status-badge status-critical">7/7</span></td>
-                                    <td>0</td>
-                                    <td>Targeted training</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>11</strong></td>
-                                    <td class="name">Mariam Al Shamsi</td>
-                                    <td>mariam.shamsi@mayar.com</td>
-                                    <td>Planning</td>
-                                    <td><span class="status-badge status-critical">7/7</span></td>
-                                    <td>0</td>
-                                    <td>Executive sponsorship</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="insights-box">
-                        <h3>Re-engagement Plan for Chronically Inactive Users</h3>
-                        <ul>
-                            <li><strong>Immediate Actions:</strong> Reach out directly via email and phone to understand barriers to adoption</li>
-                            <li><strong>Barrier Analysis:</strong> Determine if issues are: lack of awareness, unclear use cases, technical challenges, or lack of management support</li>
-                            <li><strong>Personalized Training:</strong> Conduct 1-on-1 or small group sessions tailored to their specific roles (Finance, HR, Operations, etc.)</li>
-                            <li><strong>Manager Accountability:</strong> Engage department managers to support adoption and set expectations for team members</li>
-                            <li><strong>Pilot Use Cases:</strong> Start with low-risk, high-impact use cases relevant to each department</li>
-                            <li><strong>Success Metrics:</strong> Track first message sent from each user as quick win. Target 80% of these users active by Q3 2026</li>
-                            <li><strong>Support Structure:</strong> Assign buddy system with power users (Ahmed, Ayedh, Basim) to mentor inactive users</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Inactivity Root Causes -->
-                <div class="section">
-                    <div class="section-header">
-                        <h2>Inactivity Root Cause Analysis</h2>
-                    </div>
-                    <div class="charts-row">
-                        <div class="chart-container">
-                            <h3>Inactivity vs Activity Volume</h3>
-                            <div class="chart-wrapper">
-                                <canvas id="correlationChart"></canvas>
-                            </div>
-                        </div>
-                        <div class="chart-container">
-                            <h3>Inactive vs Active User Ratio</h3>
-                            <div class="chart-wrapper">
-                                <canvas id="ratioChart"></canvas>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
                 <div class="insights-box">
-                    <h3>Re-activation Strategy</h3>
+                    <h3>Engagement Insights</h3>
                     <ul>
-                        <li><strong>Investigate April Triggers:</strong> Identify what caused the 25% spike in April</li>
-                        <li><strong>Replicate May Success:</strong> 18.1% inactivity with 9,252 messages shows strong re-engagement</li>
-                        <li><strong>Target Chronically Inactive:</strong> Focus on ~15 users who remain inactive</li>
-                        <li><strong>Early Warning System:</strong> Monitor users trending toward inactivity</li>
-                        <li><strong>Feature Training:</strong> Launch awareness campaigns to inactive users</li>
-                        <li><strong>Set Target:</strong> Achieve 15% inactivity (12-13 users) for Q3 2026</li>
+                        <li><strong>Strong Overall Engagement:</strong> 70% average engagement rate shows healthy platform adoption</li>
+                        <li><strong>February-March Peak:</strong> Engagement rates reached 82.9% and 84.3% with consistent activity</li>
+                        <li><strong>April Dip:</strong> Notable drop in messages (2,519) and engagement (77.1%) - investigate external factors</li>
+                        <li><strong>May Recovery:</strong> Highest engagement (84.9%) with 62 active users and strong message volume</li>
+                        <li><strong>User Base Stability:</strong> Consistent 70-81 users per month indicates stable platform presence</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 3: DETAILS BY USER -->
-        <div id="userdetails" class="tab-content">
-            <div class="content">
-                <div class="section">
-                    <div class="section-header">
-                        <h2>Individual User Analysis</h2>
-                    </div>
-
-                    <div class="user-selector">
-                        <label for="userSelect">Select User:</label>
-                        <select id="userSelect" onchange="updateUserAnalysis()">
-                            <option value="">-- Choose a user --</option>
-                        </select>
-                    </div>
-
-                    <div id="userProfileContainer" style="display:none;">
-                        <div class="user-profile">
-                            <div class="profile-header">
-                                <div class="profile-item">
-                                    <h4>Name</h4>
-                                    <p id="userName">-</p>
-                                </div>
-                                <div class="profile-item">
-                                    <h4>Department</h4>
-                                    <p id="userDept">-</p>
-                                </div>
-                                <div class="profile-item">
-                                    <h4>Total Messages</h4>
-                                    <p id="userTotal">-</p>
-                                </div>
-                                <div class="profile-item">
-                                    <h4>Rank</h4>
-                                    <p id="userRank">-</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="charts-row">
-                            <div class="chart-container">
-                                <h3>Monthly Messages Trend</h3>
-                                <div class="chart-wrapper">
-                                    <canvas id="userMonthlyChart"></canvas>
-                                </div>
-                            </div>
-                            <div class="chart-container">
-                                <h3>Message Types Distribution</h3>
-                                <div class="chart-wrapper">
-                                    <canvas id="userTypeChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="table-container">
-                            <h3 style="margin-bottom: 20px; color: var(--mayar-purple); font-weight: bold;">Monthly Breakdown</h3>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Month</th>
-                                        <th>Messages</th>
-                                        <th>GPT</th>
-                                        <th>Tools</th>
-                                        <th>Projects</th>
-                                        <th>Status</th>
-                                        <th>Rank</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="userMonthlyTable">
-                                    <tr>
-                                        <td colspan="7" style="text-align:center; color:#999;">Select a user to view details</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div id="userInsights" class="insights-box" style="display:none;">
-                            <h3>User Performance Insights</h3>
-                            <ul id="insightsList"></ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 4: EXECUTIVE SUMMARY -->
+        <!-- TAB 3: EXECUTIVE SUMMARY -->
         <div id="summary" class="tab-content">
             <div class="content">
+                <div class="alert-box">
+                    <h4>Executive Summary - ChatGPT Platform Performance</h4>
+                    <p>Analysis covers 85 active users across 7 months (Nov 2025 - May 2026) with real usage data extracted from latest source files.</p>
+                </div>
+
                 <div class="section">
                     <div class="section-header">
-                        <h2>Executive Summary</h2>
+                        <h2>Performance Overview</h2>
                     </div>
 
                     <div class="insights-box">
-                        <h3>Overall Performance (7 Months: Nov 2025 - May 2026)</h3>
+                        <h3>Key Metrics Summary</h3>
                         <ul>
-                            <li><strong>Total Messages:</strong> 44,322 with strong May performance (9,252 messages)</li>
-                            <li><strong>User Base:</strong> 83 total users, average 64.3 active users per month</li>
-                            <li><strong>Engagement Rate:</strong> Average 79.2% active users monthly, peaked at 81.9% in May</li>
-                            <li><strong>Power Users:</strong> Top 10 users drive 36.6% of activity - critical for platform success</li>
-                            <li><strong>Tool Adoption:</strong> 97.5% of messages are tool-based, indicating mature tool integration</li>
+                            <li><strong>Total Messages:</strong> 39,425 across 7 months (average 5,632/month)</li>
+                            <li><strong>Active Users:</strong> 85 platform users with 70% average monthly engagement</li>
+                            <li><strong>Per User Average:</strong> 464 messages over 7 months (66/month per user)</li>
+                            <li><strong>Tool Adoption:</strong> 81.5% of activity uses tool integrations - strongest feature</li>
+                            <li><strong>Peak Performance:</strong> May 2026: 7,917 messages, 62 active users (84.9% engagement)</li>
                         </ul>
                     </div>
 
                     <div class="insights-box">
-                        <h3>Key Achievements</h3>
+                        <h3>Recommended Actions</h3>
                         <ul>
-                            <li><strong>May Rebound:</strong> 216% message increase from April (2,928 to 9,252) with best inactivity rate (18.1%)</li>
-                            <li><strong>Consistent User Base:</strong> Stable 80-82 core users throughout period shows retention</li>
-                            <li><strong>Growing Engagement:</strong> Added 1 net new user (82 to 83) while increasing active users</li>
-                            <li><strong>Highest Active Users:</strong> May achieved 68 active users - peak engagement level</li>
-                        </ul>
-                    </div>
-
-                    <div class="alert-box">
-                        <h4>Critical Alert: April Performance Issue</h4>
-                        <p>April 2026 showed concerning metrics: 2,928 messages (lowest month), 25% inactivity rate (highest), and 60 active users (lowest). This V-shaped pattern with May recovery suggests temporary issue resolved by recovery efforts. Investigate root cause to prevent recurrence.</p>
-                    </div>
-
-                    <div class="insights-box">
-                        <h3>Opportunities for Optimization</h3>
-                        <ul>
-                            <li><strong>GPT Feature Adoption:</strong> Only 748 GPT messages (1.7%) vs tools (40,893). Implement training on conversational capabilities.</li>
-                            <li><strong>Inactive User Re-engagement:</strong> Average 17.1 inactive users monthly. Target re-activation could improve engagement by 8-10%.</li>
-                            <li><strong>Departmental Analysis:</strong> Analyze usage patterns by department to tailor feature training and support.</li>
-                            <li><strong>Sustainability of May Momentum:</strong> Maintain or exceed May's 9,252 message volume and 18.1% inactivity rate.</li>
-                        </ul>
-                    </div>
-
-                    <div class="insights-box">
-                        <h3>Recommended Actions (Priority Order)</h3>
-                        <ul>
-                            <li><strong>IMMEDIATE (This Week):</strong> Document and replicate May re-engagement best practices</li>
-                            <li><strong>SHORT-TERM (1-2 Weeks):</strong> Conduct April crisis post-mortem; launch re-activation campaign for 15 inactive users</li>
-                            <li><strong>MEDIUM-TERM (2-3 Weeks):</strong> Implement user activity monitoring dashboard for early warning system</li>
-                            <li><strong>ONGOING:</strong> Monthly engagement reviews; department-specific training; target 15% inactivity rate by Q3 2026</li>
-                        </ul>
-                    </div>
-
-                    <div class="insights-box">
-                        <h3>Success Metrics (Q3 2026 Goals)</h3>
-                        <ul>
-                            <li><strong>Messages:</strong> Average 8,000+ per month (vs 6,331 historical average)</li>
-                            <li><strong>Inactivity Rate:</strong> Reduce to 15% or lower (12-13 inactive users)</li>
-                            <li><strong>Active Users:</strong> Maintain 65+ active users monthly (vs 64.3 average)</li>
-                            <li><strong>GPT Adoption:</strong> Increase GPT messages to 3-5% of total (vs current 1.7%)</li>
-                            <li><strong>User Growth:</strong> Add 2-3 net new users while maintaining engagement quality</li>
+                            <li><strong>Leverage Tool Success:</strong> Tools drive 81.5% of usage - expand tool library and integrations</li>
+                            <li><strong>GPT Training Program:</strong> Only 2.4% use GPT features - create training to unlock full platform potential</li>
+                            <li><strong>Investigate April Dip:</strong> Lowest activity in April (2,519 msgs) - understand and prevent recurrence</li>
+                            <li><strong>Sustain May Momentum:</strong> Highest engagement in May - document and replicate success factors</li>
+                            <li><strong>Onboard Inactive Users:</strong> 30% inactive monthly - targeted engagement campaigns needed</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Footer -->
         <div class="footer">
             <p><strong>Mayar Foods Co.</strong> | ChatGPT Enterprise Analytics Dashboard</p>
             <p>Report Generated: <span id="reportDate"></span></p>
-            <p>Data Source: 7 months of Enterprise GPT user export logs (Nov 2025 - May 2026)</p>
+            <p>Data Source: 7 months of Enterprise ChatGPT user logs (Nov 2025 - May 2026) | 85 Active Users</p>
             <p>For inquiries: <a href="mailto:ahmed@mayar.com">ahmed@mayar.com</a></p>
         </div>
     </div>
 
     <script>
-        // User data for details tab
-        const userData = {
-            'ahmed@mayar.com': {
-                name: 'Ahmed ALMuhaidib',
-                dept: 'Management',
-                rank: 1,
-                total: 2460,
-                monthly: [
-                    {month: 'Nov 2025', msgs: 340, gpt: 45, tools: 295, proj: 0, status: 'Active', rank: 3},
-                    {month: 'Dec 2025', msgs: 385, gpt: 68, tools: 302, proj: 15, status: 'Active', rank: 2},
-                    {month: 'Jan 2026', msgs: 412, gpt: 72, tools: 325, proj: 15, status: 'Active', rank: 1},
-                    {month: 'Feb 2026', msgs: 398, gpt: 65, tools: 320, proj: 13, status: 'Active', rank: 2},
-                    {month: 'Mar 2026', msgs: 365, gpt: 58, tools: 295, proj: 12, status: 'Active', rank: 3},
-                    {month: 'Apr 2026', msgs: 185, gpt: 28, tools: 150, proj: 7, status: 'Active', rank: 4},
-                    {month: 'May 2026', msgs: 375, gpt: 66, tools: 290, proj: 19, status: 'Active', rank: 1}
-                ]
-            },
-            'ayedh.alardhi@mayar.com': {
-                name: 'Ayedh Alardhi',
-                dept: 'Operations',
-                rank: 2,
-                total: 2500,
-                monthly: [
-                    {month: 'Nov 2025', msgs: 225, gpt: 0, tools: 210, proj: 15, status: 'Active', rank: 8},
-                    {month: 'Dec 2025', msgs: 280, gpt: 0, tools: 265, proj: 15, status: 'Active', rank: 7},
-                    {month: 'Jan 2026', msgs: 265, gpt: 0, tools: 250, proj: 15, status: 'Active', rank: 6},
-                    {month: 'Feb 2026', msgs: 240, gpt: 0, tools: 225, proj: 15, status: 'Active', rank: 9},
-                    {month: 'Mar 2026', msgs: 215, gpt: 0, tools: 200, proj: 15, status: 'Active', rank: 10},
-                    {month: 'Apr 2026', msgs: 85, gpt: 0, tools: 78, proj: 7, status: 'Active', rank: 12},
-                    {month: 'May 2026', msgs: 990, gpt: 0, tools: 970, proj: 20, status: 'Active', rank: 1}
-                ]
-            },
-            'basim.tashkandi@mayar.com': {
-                name: 'Basim Tashkandi',
-                dept: 'Process',
-                rank: 3,
-                total: 1554,
-                monthly: [
-                    {month: 'Nov 2025', msgs: 285, gpt: 35, tools: 1845, proj: 5, status: 'Active', rank: 2},
-                    {month: 'Dec 2025', msgs: 310, gpt: 42, tools: 1925, proj: 8, status: 'Active', rank: 1},
-                    {month: 'Jan 2026', msgs: 295, gpt: 38, tools: 1805, proj: 12, status: 'Active', rank: 2},
-                    {month: 'Feb 2026', msgs: 265, gpt: 32, tools: 1620, proj: 8, status: 'Active', rank: 5},
-                    {month: 'Mar 2026', msgs: 210, gpt: 28, tools: 1240, proj: 6, status: 'Active', rank: 8},
-                    {month: 'Apr 2026', msgs: 95, gpt: 12, tools: 595, proj: 3, status: 'Active', rank: 9},
-                    {month: 'May 2026', msgs: 94, gpt: 21, tools: 1, proj: 0, status: 'Inactive', rank: 15}
-                ]
-            },
-            'abdulkarim.a@mayar.com': {
-                name: 'Abdulkarim Abdulaziz',
-                dept: 'Supply Chain',
-                rank: 4,
-                total: 1343,
-                monthly: [
-                    {month: 'Nov 2025', msgs: 125, gpt: 0, tools: 95, proj: 30, status: 'Inactive', rank: 15},
-                    {month: 'Dec 2025', msgs: 185, gpt: 0, tools: 145, proj: 40, status: 'Active', rank: 12},
-                    {month: 'Jan 2026', msgs: 210, gpt: 0, tools: 165, proj: 45, status: 'Active', rank: 11},
-                    {month: 'Feb 2026', msgs: 195, gpt: 0, tools: 155, proj: 40, status: 'Active', rank: 10},
-                    {month: 'Mar 2026', msgs: 180, gpt: 0, tools: 140, proj: 40, status: 'Active', rank: 9},
-                    {month: 'Apr 2026', msgs: 92, gpt: 0, tools: 70, proj: 22, status: 'Active', rank: 11},
-                    {month: 'May 2026', msgs: 556, gpt: 6, tools: 532, proj: 18, status: 'Active', rank: 2}
-                ]
-            },
-            'abdulaziz.aldakhail@mayar.com': {
-                name: 'Abdulaziz Aldakhail',
-                dept: 'Operations',
-                rank: 5,
-                total: 1638,
-                monthly: [
-                    {month: 'Nov 2025', msgs: 225, gpt: 0, tools: 195, proj: 30, status: 'Active', rank: 7},
-                    {month: 'Dec 2025', msgs: 265, gpt: 0, tools: 235, proj: 30, status: 'Active', rank: 6},
-                    {month: 'Jan 2026', msgs: 285, gpt: 0, tools: 255, proj: 30, status: 'Active', rank: 5},
-                    {month: 'Feb 2026', msgs: 278, gpt: 0, tools: 248, proj: 30, status: 'Active', rank: 6},
-                    {month: 'Mar 2026', msgs: 265, gpt: 0, tools: 235, proj: 30, status: 'Active', rank: 7},
-                    {month: 'Apr 2026', msgs: 128, gpt: 0, tools: 112, proj: 16, status: 'Active', rank: 8},
-                    {month: 'May 2026', msgs: 192, gpt: 0, tools: 162, proj: 30, status: 'Active', rank: 6}
-                ]
-            }
-        };
-
-        // Populate user selector
-        function populateUserSelector() {
-            const select = document.getElementById('userSelect');
-            const users = Object.keys(userData).sort((a, b) =>
-                userData[a].name.localeCompare(userData[b].name)
-            );
-
-            users.forEach(email => {
-                const option = document.createElement('option');
-                option.value = email;
-                option.textContent = userData[email].name;
-                select.appendChild(option);
-            });
-        }
-
-        // Update user analysis
-        let userCharts = {};
-        function updateUserAnalysis() {
-            const select = document.getElementById('userSelect');
-            const email = select.value;
-
-            if (!email) {
-                document.getElementById('userProfileContainer').style.display = 'none';
-                return;
-            }
-
-            const user = userData[email];
-            document.getElementById('userProfileContainer').style.display = 'block';
-
-            // Update profile
-            document.getElementById('userName').textContent = user.name;
-            document.getElementById('userDept').textContent = user.dept;
-            document.getElementById('userTotal').textContent = user.total.toLocaleString();
-            document.getElementById('userRank').textContent = `#${user.rank}`;
-
-            // Update monthly table
-            let tableHTML = '';
-            user.monthly.forEach(month => {
-                tableHTML += `<tr>
-                    <td><strong>${month.month}</strong></td>
-                    <td>${month.msgs}</td>
-                    <td>${month.gpt}</td>
-                    <td>${month.tools}</td>
-                    <td>${month.proj}</td>
-                    <td><span class="active-badge">${month.status}</span></td>
-                    <td>#${month.rank}</td>
-                </tr>`;
-            });
-            document.getElementById('userMonthlyTable').innerHTML = tableHTML;
-
-            // Destroy existing charts if they exist
-            if (userCharts.monthlyChart) userCharts.monthlyChart.destroy();
-            if (userCharts.typeChart) userCharts.typeChart.destroy();
-
-            // Create monthly chart
-            setTimeout(() => {
-                const monthlyCtx = document.getElementById('userMonthlyChart').getContext('2d');
-                userCharts.monthlyChart = new Chart(monthlyCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: user.monthly.map(m => m.month.split(' ')[0]),
-                        datasets: [{
-                            label: 'Messages',
-                            data: user.monthly.map(m => m.msgs),
-                            backgroundColor: colors.purple,
-                            borderColor: colors.yellow,
-                            borderWidth: 2
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: { y: { beginAtZero: true } }
-                    }
-                });
-
-                // Create type chart (latest month)
-                const latest = user.monthly[user.monthly.length - 1];
-                const typeCtx = document.getElementById('userTypeChart').getContext('2d');
-                userCharts.typeChart = new Chart(typeCtx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Tools', 'GPT', 'Projects'],
-                        datasets: [{
-                            data: [latest.tools, latest.gpt, latest.proj],
-                            backgroundColor: [colors.green, colors.purple, colors.yellow],
-                            borderColor: colors.white,
-                            borderWidth: 2
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false
-                    }
-                });
-            }, 100);
-
-            // Generate insights
-            const avgMonthly = Math.round(user.total / 7);
-            const maxMonth = Math.max(...user.monthly.map(m => m.msgs));
-            const minMonth = Math.min(...user.monthly.map(m => m.msgs));
-            const recentTrend = user.monthly[user.monthly.length - 1].msgs - user.monthly[user.monthly.length - 2].msgs;
-
-            let insights = [];
-            if (user.rank <= 3) {
-                insights.push(`<strong>Power User:</strong> Ranked #${user.rank} overall with ${user.total} messages. Key contributor to platform adoption.`);
-            }
-            insights.push(`<strong>Monthly Average:</strong> ${avgMonthly} messages, with peak of ${maxMonth} (${user.monthly.find(m => m.msgs === maxMonth).month})`);
-            if (recentTrend > 100) {
-                insights.push(`<strong>Positive Trend:</strong> +${recentTrend} messages in May, showing increased engagement`);
-            } else if (recentTrend < -100) {
-                insights.push(`<strong>Declining Engagement:</strong> -${Math.abs(recentTrend)} messages in May, needs attention`);
-            }
-
-            const toolPercent = Math.round((user.monthly.reduce((a, m) => a + m.tools, 0) / user.total) * 100);
-            insights.push(`<strong>Tool Adoption:</strong> ${toolPercent}% of messages are tool-based`);
-
-            const insightsList = document.getElementById('insightsList');
-            insightsList.innerHTML = insights.map(i => `<li>${i}</li>`).join('');
-            document.getElementById('userInsights').style.display = 'block';
-        }
-
-        // Tab switching
-        function showTab(tabName) {
-            const contents = document.querySelectorAll('.tab-content');
-            const buttons = document.querySelectorAll('.tab-button');
-
-            contents.forEach(content => content.classList.remove('active'));
-            buttons.forEach(button => button.classList.remove('active'));
-
-            document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
-
-            // Initialize user selector on first load
-            if (tabName === 'userdetails' && document.getElementById('userSelect').options.length === 1) {
-                populateUserSelector();
-            }
-        }
-
-        // Set report date
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('reportDate').textContent = new Date().toLocaleDateString('en-US', options);
-
-        // Mayar Colors
         const colors = {
             purple: '#9561A9',
             yellow: '#DBC701',
             green: '#50B948',
-            black: '#231F20',
-            lightPurple: '#C0A6CF',
-            lightYellow: '#EDE18D',
             lightGreen: '#ACD79B',
-            gray: '#939598',
-            red: '#d32f2f'
+            gray: '#939598'
         };
 
         Chart.defaults.font.family = "'Myriad Pro', Arial, Helvetica, sans-serif";
         Chart.defaults.color = colors.gray;
 
-        // === OVERALL USAGE CHARTS ===
+        document.getElementById('reportDate').textContent = new Date().toLocaleDateString('en-US', {
+            year: 'numeric', month: 'long', day: 'numeric'
+        });
 
-        // 1. Monthly Trend Chart
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Charts
         setTimeout(() => {
-            const monthlyCtx = document.getElementById('monthlyTrendChart').getContext('2d');
-            new Chart(monthlyCtx, {
+            new Chart(document.getElementById('monthlyTrendChart').getContext('2d'), {
                 type: 'line',
                 data: {
-                    labels: ['Nov 2025', 'Dec 2025', 'Jan 2026', 'Feb 2026', 'Mar 2026', 'Apr 2026', 'May 2026'],
+                    labels: ['Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May'],
                     datasets: [{
-                        label: 'Total Messages',
-                        data: [5725, 7137, 7604, 6133, 5543, 2928, 9252],
+                        label: 'Messages',
+                        data: [4566, 7137, 6873, 5567, 4846, 2519, 7917],
                         borderColor: colors.purple,
                         backgroundColor: 'rgba(149, 97, 169, 0.1)',
                         borderWidth: 3,
@@ -1468,26 +732,19 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { position: 'top' } },
-                    scales: {
-                        y: { beginAtZero: true, ticks: { callback: v => v.toLocaleString() }, grid: { color: 'rgba(0,0,0,0.05)' } },
-                        x: { grid: { display: false } }
-                    }
+                    scales: { y: { beginAtZero: true } },
+                    plugins: { legend: { position: 'top' } }
                 }
             });
-        }, 100);
 
-        // 2. Message Type Distribution
-        setTimeout(() => {
-            const typeCtx = document.getElementById('messageTypeChart').getContext('2d');
-            new Chart(typeCtx, {
+            new Chart(document.getElementById('messageTypeChart').getContext('2d'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['Tool Messages', 'GPT Messages', 'Project Messages'],
+                    labels: ['Tools', 'GPT', 'Projects'],
                     datasets: [{
-                        data: [40893, 748, 2681],
+                        data: [32145, 959, 1321],
                         backgroundColor: [colors.green, colors.purple, colors.yellow],
-                        borderColor: colors.white,
+                        borderColor: '#fff',
                         borderWidth: 3
                     }]
                 },
@@ -1497,94 +754,21 @@
                     plugins: { legend: { position: 'bottom' } }
                 }
             });
-        }, 100);
 
-        // 3. Active Users Chart
-        setTimeout(() => {
-            const activeCtx = document.getElementById('activeUsersChart').getContext('2d');
-            new Chart(activeCtx, {
+            new Chart(document.getElementById('toolAdoptionChart').getContext('2d'), {
                 type: 'bar',
                 data: {
-                    labels: ['Nov 2025', 'Dec 2025', 'Jan 2026', 'Feb 2026', 'Mar 2026', 'Apr 2026', 'May 2026'],
+                    labels: ['Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May'],
                     datasets: [
                         {
-                            label: 'Active Users',
-                            data: [61, 65, 65, 65, 64, 60, 68],
+                            label: 'Tools',
+                            data: [3196, 3605, 10902, 4849, 2268, 1237, 8561],
                             backgroundColor: colors.green
                         },
                         {
-                            label: 'Inactive Users',
-                            data: [21, 16, 17, 15, 16, 20, 15],
-                            backgroundColor: colors.lightPurple
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { stacked: true, grid: { display: false } },
-                        y: { stacked: true }
-                    }
-                }
-            });
-        }, 100);
-
-        // 4. Users by Month
-        setTimeout(() => {
-            const usersCtx = document.getElementById('usersMonthChart').getContext('2d');
-            new Chart(usersCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Nov 2025', 'Dec 2025', 'Jan 2026', 'Feb 2026', 'Mar 2026', 'Apr 2026', 'May 2026'],
-                    datasets: [{
-                        label: 'Total Users',
-                        data: [82, 81, 82, 80, 80, 80, 83],
-                        backgroundColor: colors.purple,
-                        borderColor: colors.yellow,
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    indexAxis: 'y',
-                    scales: { y: { grid: { display: false } } }
-                }
-            });
-        }, 100);
-
-        // 5. Message Type Trends
-        setTimeout(() => {
-            const trendCtx = document.getElementById('messageTypeTrendChart').getContext('2d');
-            new Chart(trendCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Nov 2025', 'Dec 2025', 'Jan 2026', 'Feb 2026', 'Mar 2026', 'Apr 2026', 'May 2026'],
-                    datasets: [
-                        {
-                            label: 'Tool Messages',
-                            data: [3780, 3605, 11006, 5014, 2364, 1317, 8776],
-                            borderColor: colors.green,
-                            backgroundColor: 'rgba(80, 185, 72, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.4
-                        },
-                        {
-                            label: 'GPT Messages',
+                            label: 'GPT',
                             data: [170, 222, 103, 83, 70, 22, 78],
-                            borderColor: colors.purple,
-                            backgroundColor: 'rgba(149, 97, 169, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.4
-                        },
-                        {
-                            label: 'Project Messages',
-                            data: [90, 378, 307, 277, 321, 48, 148],
-                            borderColor: colors.yellow,
-                            backgroundColor: 'rgba(219, 199, 1, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.4
+                            backgroundColor: colors.purple
                         }
                     ]
                 },
@@ -1594,83 +778,33 @@
                     scales: { y: { beginAtZero: true } }
                 }
             });
-        }, 100);
 
-        // === INACTIVE USERS CHARTS ===
-
-        // Inactivity Trend
-        setTimeout(() => {
-            const trendCtx = document.getElementById('inactivityTrendChart').getContext('2d');
-            new Chart(trendCtx, {
-                type: 'line',
+            new Chart(document.getElementById('activeUsersChart').getContext('2d'), {
+                type: 'bar',
                 data: {
-                    labels: ['Nov 2025', 'Dec 2025', 'Jan 2026', 'Feb 2026', 'Mar 2026', 'Apr 2026', 'May 2026'],
+                    labels: ['Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May'],
                     datasets: [{
-                        label: 'Inactive Users Count',
-                        data: [21, 16, 17, 15, 16, 20, 15],
-                        borderColor: colors.red,
-                        backgroundColor: 'rgba(211, 47, 47, 0.1)',
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.4,
-                        pointRadius: 7,
-                        pointBackgroundColor: colors.yellow,
-                        pointBorderColor: colors.red,
-                        pointBorderWidth: 3
+                        label: 'Active Users',
+                        data: [53, 65, 59, 58, 59, 54, 62],
+                        backgroundColor: colors.green,
+                        borderColor: colors.yellow,
+                        borderWidth: 2
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    scales: {
-                        y: { beginAtZero: true, max: 25 },
-                        x: { grid: { display: false } }
-                    }
+                    scales: { y: { beginAtZero: true, max: 85 } }
                 }
             });
-        }, 100);
 
-        // User Status
-        setTimeout(() => {
-            const statusCtx = document.getElementById('userStatusChart').getContext('2d');
-            new Chart(statusCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Nov 2025', 'Dec 2025', 'Jan 2026', 'Feb 2026', 'Mar 2026', 'Apr 2026', 'May 2026'],
-                    datasets: [
-                        {
-                            label: 'Active Users',
-                            data: [61, 65, 65, 65, 64, 60, 68],
-                            backgroundColor: colors.green
-                        },
-                        {
-                            label: 'Inactive Users',
-                            data: [21, 16, 17, 15, 16, 20, 15],
-                            backgroundColor: colors.red
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { stacked: true, grid: { display: false } },
-                        y: { stacked: true }
-                    }
-                }
-            });
-        }, 100);
-
-        // Inactivity Percentage
-        setTimeout(() => {
-            const percentCtx = document.getElementById('inactivityPercentChart').getContext('2d');
-            new Chart(percentCtx, {
+            new Chart(document.getElementById('engagementRateChart').getContext('2d'), {
                 type: 'line',
                 data: {
-                    labels: ['Nov 2025', 'Dec 2025', 'Jan 2026', 'Feb 2026', 'Mar 2026', 'Apr 2026', 'May 2026'],
+                    labels: ['Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May'],
                     datasets: [{
-                        label: 'Inactivity Rate %',
-                        data: [25.6, 19.8, 20.7, 18.8, 20.0, 25.0, 18.1],
+                        label: 'Engagement %',
+                        data: [73.6, 80.2, 81.9, 82.9, 84.3, 77.1, 84.9],
                         borderColor: colors.purple,
                         backgroundColor: 'rgba(149, 97, 169, 0.1)',
                         borderWidth: 3,
@@ -1682,59 +816,7 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    scales: { y: { beginAtZero: true, max: 30, ticks: { callback: v => v + '%' } } }
-                }
-            });
-        }, 100);
-
-        // Correlation
-        setTimeout(() => {
-            const corrCtx = document.getElementById('correlationChart').getContext('2d');
-            new Chart(corrCtx, {
-                type: 'scatter',
-                data: {
-                    datasets: [{
-                        label: 'Inactive vs Message Volume',
-                        data: [
-                            {x: 21, y: 5725},
-                            {x: 16, y: 7137},
-                            {x: 17, y: 7604},
-                            {x: 15, y: 6133},
-                            {x: 16, y: 5543},
-                            {x: 20, y: 2928},
-                            {x: 15, y: 9252}
-                        ],
-                        backgroundColor: colors.purple,
-                        pointRadius: 8,
-                        borderColor: colors.yellow,
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false
-                }
-            });
-        }, 100);
-
-        // Ratio
-        setTimeout(() => {
-            const ratioCtx = document.getElementById('ratioChart').getContext('2d');
-            new Chart(ratioCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Active Users (Avg)', 'Inactive Users (Avg)'],
-                    datasets: [{
-                        data: [64, 17],
-                        backgroundColor: [colors.green, colors.red],
-                        borderColor: colors.white,
-                        borderWidth: 3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom' } }
+                    scales: { y: { beginAtZero: true, max: 100, ticks: { callback: v => v + '%' } } }
                 }
             });
         }, 100);
