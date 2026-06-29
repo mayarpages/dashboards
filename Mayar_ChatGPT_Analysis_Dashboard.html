@@ -299,6 +299,7 @@
             <button class="tab-button" onclick="openTab('engagement')">Engagement Analysis</button>
             <button class="tab-button" onclick="openTab('inactive-users')">Inactive Users Detail</button>
             <button class="tab-button" onclick="openTab('user-details')">User Details</button>
+            <button class="tab-button" onclick="openTab('claude-users')">Claude Users by Account</button>
         </div>
 
         <!-- TAB 1: USER ANALYSIS -->
@@ -867,6 +868,306 @@
                 </ul>
             </div>
         </div>
+
+        <!-- TAB 5: CLAUDE USERS BY ACCOUNT -->
+<div id="claude-users" class="tab-content">
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>Team Users</h3>
+            <div class="value">14</div>
+            <div class="subtext">Claude Team Seat Tier</div>
+        </div>
+        <div class="stat-card">
+            <h3>Enterprise Users</h3>
+            <div class="value">13</div>
+            <div class="subtext">Claude Enterprise Seat Tier</div>
+        </div>
+        <div class="stat-card">
+            <h3>Total Claude Users</h3>
+            <div class="value">27</div>
+            <div class="subtext">Combined accounts</div>
+        </div>
+        <div class="stat-card">
+            <h3>Primary Owners</h3>
+            <div class="value">2</div>
+            <div class="subtext">1 Team + 1 Enterprise</div>
+        </div>
+    </div>
+
+    <!-- TEAM USERS SECTION -->
+    <div class="section">
+        <div class="section-header">
+            <h2>Claude Team Users</h2>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Seat Tier</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><strong>Lina</strong></td>
+                        <td>lina.aldryihem@mayar.com</td>
+                        <td>Primary Owner</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Standard</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Abdulhaseeb Rafique</td>
+                        <td>abdulhaseeb.rafique@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Standard</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Abdulaziz Aldakhail</td>
+                        <td>abdulaziz.aldakhail@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Standard</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Rawan Aljewair</td>
+                        <td>rawan.aljewair@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Standard</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Bassem Khalil</td>
+                        <td>bassem.khalil@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Standard</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Ruhaif Hawari</td>
+                        <td>ruhaif.hawari@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Standard</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Mohammed Musa</td>
+                        <td>mohammed.musa@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Standard</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Ali Raza</td>
+                        <td>ali.raza@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Standard</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Shruti Srivastava</td>
+                        <td>shruti.srivastava@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Standard</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Rakan Al Humaidi</td>
+                        <td>rakan.alhumaidi@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Standard</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>Muhammed Muhtady</td>
+                        <td>muhammed.muhtady@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Standard</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>Waqas Tariq</td>
+                        <td>waqas.tariq@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Standard</td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>Ghadeer Alabduljabbar</td>
+                        <td>ghadeer.alabduljabbar@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Standard</td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td>Nuha Alzahrani</td>
+                        <td>nuha.alzahrani@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Standard</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ENTERPRISE USERS SECTION -->
+    <div class="section">
+        <div class="section-header">
+            <h2>Claude Enterprise Users</h2>
+        </div>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Seat Tier</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><strong>Muhammad Umer</strong></td>
+                        <td>muhammad.umer@mayar.com</td>
+                        <td>Primary Owner</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Claude Enterprise</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Dawood H</td>
+                        <td>dawood.hashmi@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Claude Enterprise</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Basim Tashkandi</td>
+                        <td>basim.tashkandi@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Claude Enterprise</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Ahmed</td>
+                        <td>ahmed@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Claude Enterprise</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Ziyad</td>
+                        <td>ziyad.ali@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Claude Enterprise</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Ahmed</td>
+                        <td>ahmed.mazhar@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Claude Enterprise</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Mohammed Alsanea</td>
+                        <td>mohammed.alsane@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Claude Enterprise</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Ghurmullah AlZahrani</td>
+                        <td>ghurmullah.alzahrani@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Claude Enterprise</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Omer Al. Hussainy</td>
+                        <td>o.hussainy@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Claude Enterprise</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Abdullah Eragi</td>
+                        <td>abdullah.eragi@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Claude Enterprise</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>Abdul Wahab</td>
+                        <td>abdul.wahab@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Claude Enterprise</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>Abdulrahman AlHumaidi</td>
+                        <td>abdulrahman.alhumaidi@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Claude Enterprise</td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>Abdulaziz Badwilan</td>
+                        <td>abdulaziz.badwilan@mayar.com</td>
+                        <td>User</td>
+                        <td><span style="color: #50B948; font-weight: bold;">Active</span></td>
+                        <td>Claude Enterprise</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="insights-box">
+        <h3>Claude Account Overview</h3>
+        <ul>
+            <li><strong>Claude Team Account:</strong> 14 users under Standard Seat Tier, managed by Lina (Primary Owner)</li>
+            <li><strong>Claude Enterprise Account:</strong> 13 users under Claude Enterprise Seat Tier, managed by Muhammad Umer (Primary Owner)</li>
+            <li>All 27 Claude users maintain Active status across both accounts</li>
+            <li>Enterprise account provides advanced features and priority support for core team members</li>
+            <li>Team account serves as standard tier access for broader team collaboration</li>
+        </ul>
+    </div>
+</div>
+
 
         <div class="footer">
             <p>Mayar Foods Co. - ChatGPT Enterprise Analytics</p>
